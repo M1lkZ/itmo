@@ -31,10 +31,11 @@ def main():
                             f.write(f"Решение: {x}\n")
                             f.write(f"Число итераций: {iterations}\n")
                             f.write(f"Вектор погрешностей: {errors}\n")
+                        print("Ответ записан в файл.")
                         break
                     except OSError:
                         print("Ошибка записи в файл. Попробуйте снова.")
-            print("Ответ записан в файл.\n\n -------------------------- \n")
+            print("\n -------------------------- \n")
 
         except KeyboardInterrupt:
             print("\nВыход из программы.")
