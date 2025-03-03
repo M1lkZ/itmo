@@ -22,7 +22,7 @@ def main():
             if output_choice == 1:
                 print("Решение:", x)
                 print("Число итераций:", iterations)
-                print("Вектор погрешностей:", round(errors, 5))
+                print("Вектор погрешностей:", round(errors, 10))
             else:
                 while True:
                     out_filename = input("Введите имя файла для сохранения: ").strip()

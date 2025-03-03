@@ -1,7 +1,4 @@
 from my_io import *
-import warnings
-
-# warnings.filterwarnings("error")
 
 def is_diagonally_dominant(A):
     n = len(A)

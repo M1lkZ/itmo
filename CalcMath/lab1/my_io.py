@@ -47,15 +47,15 @@ def cli_matrix_input():
             if n > 20:
                 raise ValueError("Размерность матрицы не должна превышать 20.")
             print("Введите матрицу A (значения строк вводите через пробел, новую строку начинайте с помощью Enter):")
-            A = [list(map(float, input().split())) for _ in range(n)]
+            A = [list(map(float, input().replace(',', '.').split())) for _ in range(n)]
             print("Введите вектор b через пробел:")
-            b = list(map(float, input().split()))
+            b = list(map(float, input().replace(',', '.').split()))
             if len(A) != n or len(b) != n:
                 raise ValueError("Размерность матрицы или вектора не соответствует заданной.")
-            tol = float(input("Введите точность вычислений: ").strip())
+            tol = float(input("Введите точность вычислений: ").replace(',', '.').strip())
             if tol <= 0:
                     raise ValueError("Точность должна быть положительным числом.")
-            x0 = list(map(float, input("Введите вектор приближений через пробел: ").split()))
+            x0 = list(map(float, input("Введите вектор приближений через пробел: ").replace(',', '.').split()))
             if len(x0) != n:
                 raise ValueError("Размерность вектора приближений не соответствует заданной.")
             max_iter = int(input("Введите максимальное число итераций: ").strip())
