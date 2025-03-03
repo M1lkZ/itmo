@@ -1,7 +1,9 @@
 from my_io import *
 from algo import *
+from greeting import greet
 
 def main():
+    greet()
     while True:
         try:
             input_choice = input_method_choice([1, 2])
@@ -15,7 +17,7 @@ def main():
                 x, errors, iterations = solve(A, b, x0, tol, max_iter)
             except TypeError:
                 continue
-            
+
             output_choice = output_method_choice([1, 2])
             if output_choice == 1:
                 print("Решение:", x)
