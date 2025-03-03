@@ -1,5 +1,5 @@
 import numpy as np
-np.seterr(all='ignore')
+np.seterr(all='raise')
 
 def input_method_choice(valid_inputs):
     while True:

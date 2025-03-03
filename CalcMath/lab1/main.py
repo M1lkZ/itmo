@@ -11,8 +11,11 @@ def main():
             else:
                 A, b, tol, x0, max_iter = cli_matrix_input()
 
-            x, errors, iterations = solve(A, b, x0, tol, max_iter)
-
+            try:
+                x, errors, iterations = solve(A, b, x0, tol, max_iter)
+            except TypeError:
+                continue
+            
             output_choice = output_method_choice([1, 2])
             if output_choice == 1:
                 print("Решение:", x)

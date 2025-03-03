@@ -1,3 +1,8 @@
+from my_io import *
+import warnings
+
+# warnings.filterwarnings("error")
+
 def is_diagonally_dominant(A):
     n = len(A)
     for i in range(n):
@@ -43,7 +48,7 @@ def gauss_seidel(A, b, x0, epsilon, max_iterations):
                 return x, errors[-1], k + 1
             x0 = x.copy()
 
-        return None, [], 0
+        return [], [], 0
 
     except:
         print("Неизвестная ошибка в рассчётах.")
@@ -54,9 +59,12 @@ def solve(A, b, x0, tol, max_iter):
         A, b = permute_rows_and_columns(A, b)
         if not is_diagonally_dominant(A):
             print("Не удалось достичь диагонального преобладания. Корректный ответ не гарантирован.")
-        x, errors, iterations = gauss_seidel(A, b, x0, tol, max_iter)
-        while x is None:
-            print("Произошла неизвестная ошибка. Попробуйте ввести данные снова.")
-            A, b, tol = cli_matrix_input()
+        try:
             x, errors, iterations = gauss_seidel(A, b, x0, tol, max_iter)
-        return x, errors, iterations
+            while x is None:
+                print("Произошла неизвестная ошибка. Попробуйте ввести данные снова.")
+                A, b, tol, x0, max_iter = cli_matrix_input()
+                x, errors, iterations = gauss_seidel(A, b, x0, tol, max_iter)
+            return x, errors, iterations
+        except TypeError:
+            print("Не удалось произвести рассчёты.")
