@@ -34,7 +34,7 @@ def main():
                         break
                     except OSError:
                         print("Ошибка записи в файл. Попробуйте снова.")
-            print("\n ----------------- \n")
+            print("Ответ записан в файл.\n\n -------------------------- \n")
 
         except KeyboardInterrupt:
             print("\nВыход из программы.")
