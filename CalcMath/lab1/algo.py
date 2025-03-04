@@ -2,6 +2,7 @@ from my_io import *
 
 def is_diagonally_dominant(A):
     n = len(A)
+    if n == 1: return True
     for i in range(n):
         row_sum = sum(abs(A[i][j]) for j in range(n) if j != i)
         if abs(A[i][i]) < row_sum:
@@ -24,26 +25,25 @@ def permute_rows_and_columns(A, b):
     return A, b
 
 
-def gauss_seidel(A, b, x0, epsilon, max_iterations):
+def gauss_seidel(A, b, xi, epsilon, M):
     try:
         n = len(A)
-        x = x0.copy()
-        errors = []
-
-        for k in range(max_iterations):
+        x = xi.copy()
+        for k in range(M):
+            errors = []
             delta = 0
             for i in range(n):
-               s = sum(A[i][j] * x[j] for j in range(i)) + sum(A[i][j] * x0[j] for j in range(i + 1, n))
-               new_xi = (b[i] - s) / A[i][i]
-               d = abs(new_xi - x0[i])
-               if d > delta:
-                   delta = d
-                   x[i] = new_xi
-            errors.append(delta)
+                s = sum(A[i][j] * x[j] for j in range(i)) + sum(A[i][j] * xi[j] for j in range(i + 1, n))
+                new_xi = (b[i] - s) / A[i][i]
+                d = abs(new_xi - xi[i])
+                if d > delta:
+                    delta = d
+                    x[i] = new_xi
+                errors.append(delta)
         
             if delta < epsilon:
-                return x, errors[-1], k + 1
-            x0 = x.copy()
+                return x, errors, k + 1
+            xi = x.copy()
 
         return [], [], 0
 
@@ -56,12 +56,13 @@ def solve(A, b, x0, tol, max_iter):
         A, b = permute_rows_and_columns(A, b)
         if not is_diagonally_dominant(A):
             print("Не удалось достичь диагонального преобладания. Корректный ответ не гарантирован.")
-        try:
+    try:
+        x, errors, iterations = gauss_seidel(A, b, x0, tol, max_iter)
+        while x is None:
+            print("Произошла неизвестная ошибка. Попробуйте ввести данные снова.")
+            A, b, tol, x0, max_iter = cli_matrix_input()
             x, errors, iterations = gauss_seidel(A, b, x0, tol, max_iter)
-            while x is None:
-                print("Произошла неизвестная ошибка. Попробуйте ввести данные снова.")
-                A, b, tol, x0, max_iter = cli_matrix_input()
-                x, errors, iterations = gauss_seidel(A, b, x0, tol, max_iter)
-            return x, errors, iterations
-        except TypeError:
-            print("Не удалось произвести рассчёты.")
+        errors = [float(x) for x in errors]
+        return x, errors, iterations
+    except TypeError:
+        print("Не удалось произвести рассчёты.")

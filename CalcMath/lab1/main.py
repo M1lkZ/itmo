@@ -6,13 +6,16 @@ def main():
     greet()
     while True:
         try:
-            input_choice = input_method_choice([1, 2])
+            input_choice = input_method_choice([1, 2, 3])
             if input_choice == 2:
                 filename = input("Введите имя файла: ").strip()
-                A, b, tol, x0, max_iter = file_matrix_input(filename)
-            else:
-                A, b, tol, x0, max_iter = cli_matrix_input()
+                A, b, tol, x0 = file_matrix_input(filename)
+            elif input_choice == 1:
+                A, b, tol, x0 = cli_matrix_input()
+            elif input_choice == 3:
+                A, b, tol, x0 = random_matrix_input()
 
+            max_iter = 10000;
             try:
                 x, errors, iterations = solve(A, b, x0, tol, max_iter)
             except TypeError:
@@ -22,7 +25,7 @@ def main():
             if output_choice == 1:
                 print("Решение:", x)
                 print("Число итераций:", iterations)
-                print("Вектор погрешностей:", round(errors, 10))
+                print("Вектор погрешностей:", errors)
             else:
                 while True:
                     out_filename = input("Введите имя файла для сохранения: ").strip()
